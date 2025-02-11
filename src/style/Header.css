@@ -1,0 +1,9 @@
+#logo {
+    height: 100px;
+    width: 100px;
+}
+.Header{
+    background: burlywood;
+    display: flex;
+    flex-direction: row;
+}
