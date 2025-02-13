@@ -4,10 +4,31 @@ import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import {AuthProvider} from "./context/AuthContext";
 import Login from "./pages/Login";
+import axios from "axios";
+import ProductList from "./pages/ProductList"; // Récupérer le token depuis localStorage
+import {CartProvider} from "./context/CartContext";
+const token = localStorage.getItem("token");
 
+if (token) {
+    axios.get("http://localhost:3000/api/produits", {
+        headers: {
+            Authorization: `Bearer ${token}`  // Ajouter le token dans l'en-tête Authorization
+        }
+    })
+        .then(response => {
+            console.log("Réponse des produits : ", response.data);
+        })
+        .catch(error => {
+            console.error("Erreur :", error.response.data);
+        });
+} else {
+    console.log("Aucun token trouvé");
+}
 function App() {
     return (
         <AuthProvider>
+            <CartProvider>
+                {" "}
             <Router>
                 <Routes>
                     <Route path={"/"} element={<Layout />}>
@@ -18,6 +39,7 @@ function App() {
                     </Route>
                 </Routes>
             </Router>
+            </CartProvider>
         </AuthProvider>
     );
 }

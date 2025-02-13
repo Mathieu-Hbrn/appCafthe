@@ -8,7 +8,6 @@ function Layout(props) {
     return (
         <>
             <Header />
-            <Navbar />
             <Outlet />
             <Footer />
         </>

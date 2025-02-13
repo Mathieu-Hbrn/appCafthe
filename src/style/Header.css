@@ -6,4 +6,16 @@
     background: burlywood;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.Header div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.Header div span {
+    margin: 10px;
 }

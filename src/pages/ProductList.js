@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
 import Skeleton from "react-loading-skeleton";
@@ -7,23 +7,36 @@ import "../style/ProductList.css"
 
 
 
+
 function ProductList(props) {
+    //   const {token} = useContext(AuthContext)
+    const token = localStorage.getItem(`token`)
     const [produits, setProduits] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
+    const [categorieId, setCategorieId] = useState("")
+
 
     useEffect(() => {
         const fetchProduits = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/api/produits");
+                const res = await axios.get("http://localhost:3000/api/produits", {
+                    headers: {Authorization: `Bearer `+ token}
+                });
                 setProduits(res.data);
             } catch (err) {
                 console.error("Erreur de chargement des produits ",err);
+
             } finally {
                 setIsLoading(false); /* On arrete d'afficher les elemnts de chargement */
             }
         };
         void fetchProduits();
     }, []);
+
+    // Filtrage des produits par catégorie
+    const produitsFiltres = categorieId
+        ? produits.filter((produit) => produit.id_categorie === parseInt(categorieId))
+        : produits;
     if(isLoading){
         return (
             <div className="product-list">
@@ -49,15 +62,44 @@ function ProductList(props) {
     return (
         <div>
             <h3>Liste des produits</h3>
-            <div className="product-list">
-                {/* Image*/}
 
-                {produits.map((produit) =>
-                    <ProductCard key={produit.id_produit} produit={produit} />
+            <div className="category-buttons">
+                <button
+                    onClick={() => setCategorieId(null)}
+                    className={!categorieId ? "active" : ""}
+                >
+                    Toutes
+                </button>
+                <button
+                    onClick={() => setCategorieId(1)}
+                    className={categorieId === 1 ? "active" : ""}
+                >
+                    Thé
+                </button>
+                <button
+                    onClick={() => setCategorieId(2)}
+                    className={categorieId === 2 ? "active" : ""}
+                >
+                    Café
+                </button>
+                <button
+                    onClick={() => setCategorieId(3)}
+                    className={categorieId === 3 ? "active" : ""}
+                >
+                    Accessoires
+                </button>
+            </div>
+
+
+            <div className="product-list">
+                {produitsFiltres.length > 0 ? (
+                    produitsFiltres.map((produit) => <ProductCard key={produit.id_produit} produit={produit} />)
+                ) : (
+                    <p>Aucun produit trouvé pour cette catégorie.</p>
                 )}
             </div>
         </div>
-    )
+    );
 }
 
 export default ProductList;

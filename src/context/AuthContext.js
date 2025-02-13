@@ -6,7 +6,7 @@ export const AuthContext = createContext(null);
 /* Création du provider pour la connexion et la deco */
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null); // Client
-    const [token, setToken] = useState(null); // tokan JWT
+    const [token, setToken] = useState(null); // token JWT
 
     // Stockage dans le LocalStorage pour la persistance des données
     useEffect(() => {
@@ -18,6 +18,7 @@ export function AuthProvider({ children }) {
             setUser(JSON.parse(storedUser));
         }
     }, []);
+
 
     // Si le token ou l'user changent, on met à jour le localStorage
     useEffect(() => {
