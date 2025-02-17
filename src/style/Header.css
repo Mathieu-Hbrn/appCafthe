@@ -19,3 +19,7 @@
 .Header div span {
     margin: 10px;
 }
+
+.dropdown:hover > #cart-dropdown{
+    display: block;
+}

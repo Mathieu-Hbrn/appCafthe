@@ -4,9 +4,11 @@ import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import {AuthProvider} from "./context/AuthContext";
 import Login from "./pages/Login";
+import panier from "./pages/Panier";
 import axios from "axios";
 import ProductList from "./pages/ProductList"; // Récupérer le token depuis localStorage
 import {CartProvider} from "./context/CartContext";
+import Panier from "./pages/Panier";
 const token = localStorage.getItem("token");
 
 if (token) {
@@ -29,16 +31,17 @@ function App() {
         <AuthProvider>
             <CartProvider>
                 {" "}
-            <Router>
-                <Routes>
-                    <Route path={"/"} element={<Layout />}>
-                        <Route index element={<Home />}/>
-                        <Route path={"login"} element={<Login/>}/>
-                        <Route path="produit/:id" element={<ProductDetail/>}/>
+                <Router>
+                    <Routes>
+                        <Route path={"/"} element={<Layout />}>
+                            <Route index element={<Home />}/>
+                            <Route path={"login"} element={<Login/>}/>
+                            <Route path={"Panier"} element={<Panier />}/>
+                            <Route path="produit/:id" element={<ProductDetail/>}/>
 
-                    </Route>
-                </Routes>
-            </Router>
+                        </Route>
+                    </Routes>
+                </Router>
             </CartProvider>
         </AuthProvider>
     );
