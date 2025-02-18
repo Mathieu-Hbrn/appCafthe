@@ -1,31 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import CartContext from "../context/CartContext";
+import {useCart} from "../context/CartContext";
 
 function Panier() {
-    const [inCartItemsNum, setInCartItemsNum] = useState(0);
-    const [cartArticles, setCartArticles] = useState([]);
 
-    // Charger les données du localStorage au montage du composant
-    useEffect(() => {
-        const storedItemsNum = parseInt(localStorage.getItem('inCartItemsNum')) || 0;
-        const storedCartArticles = JSON.parse(localStorage.getItem('cartArticles')) || [];
+    const { cartItems } = useCart();
 
-        setInCartItemsNum(storedItemsNum);
-        setCartArticles(storedCartArticles);
-    }, []);
+
+    // Charger les données du localStorage
+
 
     return (
         <div>
-            <p>Articles dans le panier : <span id="in-cart-items-num">{inCartItemsNum}</span></p>
+            <p>Articles dans le panier : <span id="in-cart-items-num">{cartItems.length}</span></p>
 
             <ul id="cart-dropdown">
-                {cartArticles.length > 0 ? (
-                    cartArticles.map(article => (
-                        <li key={article.id}>
-                            <a href={article.url}>
-                                {article.name}<br />
-                                <small>Quantité : <span className="qt">{article.qt}</span></small>
-                            </a>
+                {cartItems.length > 0 ? (
+                    cartItems.map(article => (
+                        <li key={article.id_produit}>
+                            <td>{article.designation_produit}<br /></td>
+                            <td>{article.designation_produit}</td>
+                            <td>{article.prix_ht_produit}€</td>
+                            <small>Quantité : <span className="qt">{article.qt}</span></small>
+
                         </li>
                     ))
                 ) : (
@@ -33,26 +29,8 @@ function Panier() {
                 )}
             </ul>
 
-            <table className="table">
-                <thead>
-                <tr>
-                    <th>Article</th>
-                    <th>Prix</th>
-                    <th>Quantité</th>
-                </tr>
-                </thead>
-                <tbody id="cart-tablebody">
-                {cartArticles.map(article => (
-                    <tr key={article.id}>
-                        <td>{article.name}</td>
-                        <td>{article.price}€</td>
-                        <td>{article.qt}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
 
-            <p>Sous total : <span className="subtotal">{cartArticles.reduce((sum, item) => sum + item.price * item.qt, 0)}</span>€</p>
+            <p>Sous total : <span className="subtotal">{cartItems.reduce((sum, item) => sum + cartItems.prix_ht_produit , 0)}</span>€</p>
 
             <button id="confirm-command">Passer la commande</button>
         </div>
