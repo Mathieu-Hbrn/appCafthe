@@ -17,9 +17,10 @@ export const CartProvider = ({ children }) => {
         setCartItems((prevItems) => [...prevItems, item]);
     };
 
-    const removeFromCart = (itemId) => {
-        setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    const removeFromCart = (id_produit) => {
+        setCartItems(prevItems => prevItems.filter(item => item.id_produit !== id_produit));
     };
+
 
     const clearCart = () => {
         setCartItems([]);
@@ -32,7 +33,10 @@ export const CartProvider = ({ children }) => {
             {children}
         </CartContext.Provider>
     );
+
+
 };
+
 
 export const useCart = () => useContext(CartContext);
 
