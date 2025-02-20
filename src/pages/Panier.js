@@ -19,9 +19,19 @@ function Panier() {
             [id]: quantity
         }));
     }
+    const getTVA = (categorie) => {
+        return categorie === 3 ? 0.20 : 0.055
+    }
+
     const subtotal = cartItems.reduce((sum, item) =>
         sum + (parseFloat(item.prix_ht_produit) * (quantite[item.id_produit] || 1)), 0
     );
+
+    const totalTTC = cartItems.reduce((sum, item) => {
+        const prixHT = parseFloat(item.prix_ht_produit);
+        const tva = getTVA(item.categorie_produit);
+        return sum + (prixHT * (1+ tva) * (quantite[item.id_produit] || 1));
+    }, 0);
 
 
 
@@ -61,6 +71,7 @@ function Panier() {
 
 
             <p>Sous total : <span className="subtotal">{subtotal.toFixed(2)}</span>€</p>
+            <p>Total TTC : <span className="total-ttc">{totalTTC.toFixed(2)}</span></p>
 
 
         </div>

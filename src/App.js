@@ -9,6 +9,7 @@ import axios from "axios";
 import ProductList from "./pages/ProductList"; // Récupérer le token depuis localStorage
 import {CartProvider} from "./context/CartContext";
 import Panier from "./pages/Panier";
+import Account from "./pages/Account";
 const token = localStorage.getItem("token");
 
 if (token) {
@@ -38,7 +39,7 @@ function App() {
                             <Route path={"login"} element={<Login/>}/>
                             <Route path={"Panier"} element={<Panier />}/>
                             <Route path="produit/:id" element={<ProductDetail/>}/>
-
+                            <Route path="/client/:id" element={<Account />}/>
                         </Route>
                     </Routes>
                 </Router>
