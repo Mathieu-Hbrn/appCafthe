@@ -13,8 +13,8 @@ function Header(props) {
     const { cartItems } = useCart();
     return (
         <div className="Header">
-            <Link to={``}><img src="/img/Logo.jpg" alt="Logo cafthé" id="logo"/></Link>
-            <h2>Bienvenu chez Caf'Thé</h2>
+            <Link to={``}><img src="/img/Logo.png" alt="Logo cafthé" id="logo"/></Link>
+            <h2>Bienvenue chez Caf'Thé</h2>
             {cartItems.length > 0 ? (
                 <div>
                     <p>Vous avez <span id="in-cart-items-num">{cartItems.length}</span> Articles dans votre panier</p>
