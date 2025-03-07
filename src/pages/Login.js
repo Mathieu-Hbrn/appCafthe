@@ -30,8 +30,8 @@ function Login(props) {
 
         try {
             const response = await axios.post('http://localhost:3000/api/client/login', {
-                Mail_client: email, // Correction du nom du champ
-                mdp_client: mot_de_passe, // Correction du nom du champ
+                email: email,
+                mot_de_passe: mot_de_passe, // Correction du nom du champ
             });
 
             const { token, client } = response.data;
@@ -52,13 +52,14 @@ function Login(props) {
         setErrorMsgRegister('');
 
         try {
+
             const response = await axios.post("http://localhost:3000/api/client/register", {
-                nom_prenom_client: nom_prenom,
-                Telephone_client: telephone,
-                Date_inscription_client: dateFormat,
-                Mail_client: mail_register,
-                mdp_client: mdp_register,
-                adresse_client: adresse,
+                nom_prenom: nom_prenom,
+                telephone: telephone,
+                dateFormat: dateFormat,
+                mail_register: mail_register,
+                mdp_register: mdp_register,
+                adresse: adresse,
             });
 
             const { token, client } = response.data;
