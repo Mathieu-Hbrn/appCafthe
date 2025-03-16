@@ -13,7 +13,7 @@ import Account from "./pages/Account";
 const token = localStorage.getItem("token");
 
 if (token) {
-    axios.get("http://localhost:3000/api/produits", {
+    axios.get(`${process.env.REACT_APP_API_URL}/api/produits`, {
         headers: {
             Authorization: `Bearer ${token}`  // Ajouter le token dans l'en-tête Authorization
         }

@@ -29,7 +29,7 @@ function Login(props) {
         setErrorMsgLogin('');
 
         try {
-            const response = await axios.post('http://localhost:3000/api/client/login', {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/client/login`, {
                 email: email,
                 mot_de_passe: mot_de_passe, // Correction du nom du champ
             });
@@ -53,7 +53,7 @@ function Login(props) {
 
         try {
 
-            const response = await axios.post("http://localhost:3000/api/client/register", {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/client/register`, {
                 nom_prenom: nom_prenom,
                 telephone: telephone,
                 dateFormat: dateFormat,

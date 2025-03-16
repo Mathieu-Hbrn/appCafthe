@@ -19,8 +19,8 @@ function ProductList(props) {
     useEffect(() => {
         const fetchProduits = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/api/produits", {
-                    headers: {Authorization: `Bearer `+ token}
+                const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/produits`, {
+                    //headers: {Authorization: `Bearer `+ token}
                 });
                 setProduits(res.data);
             } catch (err) {

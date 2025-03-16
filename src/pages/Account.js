@@ -1,5 +1,4 @@
-import {useEffect, useState} from "react";
-import Skeleton from "react-loading-skeleton";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "../style/Account.css"
 
@@ -7,7 +6,7 @@ function Account() {
     const token = localStorage.getItem("token");
     const [id_client, setId_Client] = useState(null);
     const [commande, setCommande] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [commandeDetail, setCommandeDetail] = useState(null)
     const [user, setUser] = useState(null);
     const [formData, setFormData] = useState({
         nom_prenom_client: '',
@@ -17,6 +16,12 @@ function Account() {
     });
     const [updateMessage, setUpdateMessage] = useState('');
     const [updateStatus, setUpdateStatus] = useState('');
+    const [showPasswordForm, setShowPasswordForm] = useState(false);
+    const [passwordData, setPasswordData] = useState({
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
 
     // Récupérer les données du client depuis le localStorage
     useEffect(() => {
@@ -40,20 +45,31 @@ function Account() {
             if (!id_client || !token) return;
 
             try {
-                const res = await axios.get(`http://localhost:3000/api/commande/client/${id_client}`, {
+                const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/commande/client/${id_client}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 console.log(res.data);
                 setCommande(Array.isArray(res.data) ? res.data : []);
             } catch (err) {
                 console.error("Erreur de chargement des commandes", err);
-            } finally {
-                setIsLoading(false);
             }
         };
 
         fetchCommande();
     }, [id_client, token]);
+
+    const showDetail = async (id_commande) => {
+        if (!id_client || !token) return;
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/detail_commande/${id_commande}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            console.log(res.data);
+            setCommandeDetail(res.data);
+        } catch (err) {
+            console.error("Erreur de chargement de la commandes", err);
+        }
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -61,6 +77,10 @@ function Account() {
             ...formData,
             [name]: value
         });
+    };
+    const handlePasswordChange = (e) => {
+        const { name, value } = e.target;
+        setPasswordData({ ...passwordData, [name]: value });
     };
 
     const handleSubmit = async (e) => {
@@ -71,7 +91,7 @@ function Account() {
         try {
             // Envoi de toutes les données du formulaire, modifiées ou non
             const res = await axios.put(
-                `http://localhost:3000/api/client/update/${id_client}`,
+                `${process.env.REACT_APP_API_URL}/api/client/modification/${id_client}`,
                 formData,
                 {
                     headers: { Authorization: `Bearer ${token}` },
@@ -99,23 +119,30 @@ function Account() {
         }
     };
 
-    if (isLoading) {
-        return (
-            <div className="order-list">
-                {Array.from({ length: 6 }).map((_, i) => (
-                    <div key={i} className="product-skeleton">
-                        <Skeleton height={200} width={300} />
-                        <div style={{ marginTop: "10px" }}>
-                            <Skeleton height={20} width="70%" />
-                        </div>
-                        <div style={{ marginTop: "5px" }}>
-                            <Skeleton height={20} width="40%" />
-                        </div>
-                    </div>
-                ))}
-            </div>
-        );
-    }
+    const handlePasswordSubmit = async (e) => {
+        e.preventDefault();
+        if (passwordData.new_mdp !== passwordData.confirmPassword) {
+            setUpdateMessage("Les nouveaux mots de passe ne correspondent pas.");
+            setUpdateStatus("error");
+            return;
+        }
+        try {
+            await axios.put(`${process.env.REACT_APP_API_URL}/client/update/mdp/${id_client}`, {
+                last_mdp: passwordData.last_mdp,
+                new_mdp: passwordData.new_mdp
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setUpdateStatus("success");
+            setUpdateMessage("Mot de passe mis à jour avec succès");
+        } catch (err) {
+            setUpdateStatus("error");
+            setUpdateMessage(err.response?.data?.message || "Erreur lors de la mise à jour du mot de passe");
+        }
+    };
+
+
+
 
     return (
         <div className="account-container">
@@ -128,6 +155,18 @@ function Account() {
                                 <p>Commande ID: {cmd.id_commande}</p>
                                 <p>Statut: {cmd.status_commande}</p>
                                 <p>Prix TTC: {cmd.montant_ttc} €</p>
+                                <button onClick={() => showDetail(cmd.id_commande)} className="detail-commande">
+                                    Afficher les details
+                                </button>
+                                {commandeDetail && (
+                                    <div className="order-details">
+                                        <h3>Détails de la commande</h3>
+                                        <p>ID: {commandeDetail.id_commande}</p>
+                                        <p>Statut: {commandeDetail.status_commande}</p>
+                                        <p>Prix: {commandeDetail.montant_ttc} €</p>
+                                        <p>Produits: {commandeDetail.produits?.map(p => `${p.nom} x${p.quantite}`).join(", ")}</p>
+                                    </div>
+                                )}
                             </div>
                         ))
                     ) : (
@@ -189,9 +228,29 @@ function Account() {
                         />
                     </div>
                     <button type="submit" className="update-button">
-                        Mettre à jour
+                        Mettre à jour vos informations
                     </button>
                 </form>
+                <button className="update-button" onClick={() => setShowPasswordForm(!showPasswordForm)}>
+                    Modifier votre mot de passe
+                </button>
+                {showPasswordForm && (
+                    <form onSubmit={handlePasswordSubmit}>
+                        <div className="form-group">
+                            <label>Ancien mot de passe</label>
+                            <input type="password" name="last_mdp" value={passwordData.last_mdp} onChange={handlePasswordChange} required />
+                        </div>
+                        <div className="form-group">
+                            <label>Nouveau mot de passe</label>
+                            <input type="password" name="new_mdp" value={passwordData.new_mdp} onChange={handlePasswordChange} required />
+                        </div>
+                        <div className="form-group">
+                            <label>Confirmez votre mot de passe</label>
+                            <input type="password" name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange} required />
+                        </div>
+                        <button type="submit" className="update-button">Mettre à jour le mot de passe</button>
+                    </form>
+                )}
             </div>
         </div>
     );
