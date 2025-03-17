@@ -61,7 +61,7 @@ function Account() {
     const showDetail = async (id_commande) => {
         if (!id_client || !token) return;
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/detail_commande/${id_commande}`, {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/detail_commande/${id_commande}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             console.log(res.data);
@@ -127,7 +127,7 @@ function Account() {
             return;
         }
         try {
-            await axios.put(`${process.env.REACT_APP_API_URL}/client/update/mdp/${id_client}`, {
+            await axios.put(`${process.env.REACT_APP_API_URL}/api/client/update/mdp/${id_client}`, {
                 last_mdp: passwordData.last_mdp,
                 new_mdp: passwordData.new_mdp
             }, {

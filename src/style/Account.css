@@ -1,0 +1,10 @@
+.Order-list {
+    display: flex;
+    margin: 20px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.order-item {
+    margin: 20px;
+}

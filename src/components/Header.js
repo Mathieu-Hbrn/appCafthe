@@ -16,7 +16,7 @@ function Header(props) {
             <Link to={``}><img src="/img/Logo.png" alt="Logo cafthé" id="logo"/></Link>
             <h2>Bienvenue chez Caf'Thé</h2>
             {cartItems.length > 0 ? (
-                <div>
+                <div className="panier">
                     <p>Vous avez <span id="in-cart-items-num">{cartItems.length}</span> Articles dans votre panier</p>
                     <button className="go-to-cart"><a href="/Panier/">Voir le panier</a></button><button className="btn btn-primary" onClick={clearCart}>Vider le panier</button>
                 </div>

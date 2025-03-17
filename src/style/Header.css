@@ -13,11 +13,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+
 }
 
 .Header div span {
     margin: 10px;
+}
+
+.panier button {
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 
 .dropdown:hover > #cart-dropdown{
