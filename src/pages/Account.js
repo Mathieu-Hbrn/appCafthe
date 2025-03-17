@@ -158,21 +158,23 @@ function Account() {
                                 <button onClick={() => showDetail(cmd.id_commande)} className="detail-commande">
                                     Afficher les details
                                 </button>
-                                {commandeDetail && (
-                                    <div className="order-details">
-                                        <h3>Détails de la commande</h3>
-                                        <p>ID: {commandeDetail.id_commande}</p>
-                                        <p>Statut: {commandeDetail.status_commande}</p>
-                                        <p>Prix: {commandeDetail.montant_ttc} €</p>
-                                        <p>Produits: {commandeDetail.produits?.map(p => `${p.nom} x${p.quantite}`).join(", ")}</p>
-                                    </div>
-                                )}
+
                             </div>
                         ))
                     ) : (
                         <p>Aucune commande réalisée</p>
                     )}
                 </div>
+                {commandeDetail && (
+                    <div className="order-details">
+                        <h3>Détails de la commande</h3>
+                        <p>Commande ID: {commandeDetail.id_commande}</p>
+                        <ul>
+                            <li></li>
+                        </ul>
+
+                    </div>
+                )}
             </div>
 
             <div className="profile-section">

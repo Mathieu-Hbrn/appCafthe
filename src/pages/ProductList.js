@@ -10,7 +10,7 @@ import "../style/ProductList.css"
 
 function ProductList(props) {
     //   const {token} = useContext(AuthContext)
-    const token = localStorage.getItem(`token`)
+    //const token = localStorage.getItem(`token`)
     const [produits, setProduits] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
     const [categorieId, setCategorieId] = useState("")
