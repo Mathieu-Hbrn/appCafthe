@@ -10,6 +10,7 @@ import ProductList from "./pages/ProductList"; // Récupérer le token depuis lo
 import {CartProvider} from "./context/CartContext";
 import Panier from "./pages/Panier";
 import Account from "./pages/Account";
+import LegalMentions from "./pages/LegalMentions";
 const token = localStorage.getItem("token");
 
 if (token) {
@@ -40,6 +41,8 @@ function App() {
                             <Route path={"Panier"} element={<Panier />}/>
                             <Route path="produit/:id" element={<ProductDetail/>}/>
                             <Route path="/client/:id" element={<Account />}/>
+                            <Route path="/cient/suprr/:id" element={<Account/>}/>
+                            <Route path="LegalMentions" element={<LegalMentions/>}/>
                         </Route>
                     </Routes>
                 </Router>

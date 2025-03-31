@@ -3,6 +3,8 @@ import axios from "axios";
 import "../style/Account.css"
 import LigneCommande from "../components/LigneCommande";
 
+
+
 function Account() {
     const token = localStorage.getItem("token");
     const [id_client, setId_Client] = useState(null);
@@ -18,11 +20,13 @@ function Account() {
     const [updateMessage, setUpdateMessage] = useState('');
     const [updateStatus, setUpdateStatus] = useState('');
     const [showPasswordForm, setShowPasswordForm] = useState(false);
+    const [showSuprButton, setShowSuprButton] = useState(false)
     const [passwordData, setPasswordData] = useState({
         oldPassword: '',
         newPassword: '',
         confirmPassword: ''
     });
+
 
     // Récupérer les données du client depuis le localStorage
     const recupId = () => {
@@ -39,6 +43,8 @@ function Account() {
             });
         }
     }
+
+
 
     // Récupérer les commandes du client
     const fetchCommande = async () => {
@@ -146,6 +152,37 @@ function Account() {
         }
     }
 
+    async function handleSuprrAccount() {
+        const userDataSuppr = localStorage.getItem("user");
+
+        if (!userDataSuppr) {
+            console.error("Aucun utilisateur trouvé dans le localStorage");
+            return;
+        }
+
+        const userData = JSON.parse(userDataSuppr);
+        setUser(userData);
+
+
+        try {
+            await axios.put(
+                `${process.env.REACT_APP_API_URL}/api/client/suppr/${userData.id}`,
+                {},
+                {
+                    headers: { Authorization: `Bearer ${userData.token}` }
+                }
+            );
+            console.log("Compte supprimé avec succès !");
+            setUser(null)
+
+        } catch (error) {
+            console.error("Erreur lors de la suppression du compte:", error);
+        }
+    }
+
+
+
+
     return (
         <div className="account-container">
             <div className="order-section">
@@ -182,7 +219,13 @@ function Account() {
             <div className="profile-section">
                 <h2>Modifier vos informations</h2>
                 {updateMessage && (
-                    <div className={`update-message ${updateStatus}`}>
+                    <div className={`
+                    update - message
+                    $
+                    {
+                        updateStatus
+                    }
+                    `}>
                         {updateMessage}
                     </div>
                 )}
@@ -256,8 +299,17 @@ function Account() {
                     </form>
                 )}
             </div>
+            <div>
+                <button className="suprr-button" onClick={() => setShowSuprButton(!showSuprButton)}>
+                    Supprimer mon compte
+                </button>
+                {showSuprButton && (
+
+                        <button type="submit" className="update-button" onClick={handleSuprrAccount}>Valider la suppression de mon compte</button>
+                )}
+            </div>
         </div>
     );
 }
 
-export default Account;
+export default Account
