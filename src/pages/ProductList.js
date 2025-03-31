@@ -27,7 +27,7 @@ function ProductList(props) {
                 console.error("Erreur de chargement des produits ",err);
 
             } finally {
-                setIsLoading(false); /* On arrete d'afficher les elemnts de chargement */
+                setIsLoading(false); /* On arrete d'afficher les elements de chargement */
             }
         };
         void fetchProduits();
@@ -37,6 +37,7 @@ function ProductList(props) {
     const produitsFiltres = categorieId
         ? produits.filter((produit) => produit.id_categorie === parseInt(categorieId))
         : produits;
+
     if(isLoading){
         return (
             <div className="product-list">

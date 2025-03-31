@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "../style/Account.css"
+import LigneCommande from "../components/LigneCommande";
 
 function Account() {
     const token = localStorage.getItem("token");
     const [id_client, setId_Client] = useState(null);
-    const [commande, setCommande] = useState([]);
+    const [commande, setCommande] = useState(null);
     const [commandeDetail, setCommandeDetail] = useState(null)
     const [user, setUser] = useState(null);
     const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ function Account() {
     });
 
     // Récupérer les données du client depuis le localStorage
-    useEffect(() => {
+    const recupId = () => {
         const userData = JSON.parse(localStorage.getItem("user"));
         setUser(userData);
         if (userData) {
@@ -37,26 +38,23 @@ function Account() {
                 adresse_client: userData.adresse || ''
             });
         }
-    }, []);
+    }
 
     // Récupérer les commandes du client
-    useEffect(() => {
-        const fetchCommande = async () => {
-            if (!id_client || !token) return;
-
+    const fetchCommande = async () => {
+        if (!id_client || !token) {
+            return
+        } else {
             try {
                 const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/commande/client/${id_client}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                console.log(res.data);
                 setCommande(Array.isArray(res.data) ? res.data : []);
             } catch (err) {
                 console.error("Erreur de chargement des commandes", err);
             }
-        };
-
-        fetchCommande();
-    }, [id_client, token]);
+        }
+    };
 
     const showDetail = async (id_commande) => {
         if (!id_client || !token) return;
@@ -64,7 +62,6 @@ function Account() {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/detail_commande/${id_commande}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            console.log(res.data);
             setCommandeDetail(res.data);
         } catch (err) {
             console.error("Erreur de chargement de la commandes", err);
@@ -141,15 +138,20 @@ function Account() {
         }
     };
 
-
-
+    if (commande === null){
+        if (user === null){
+            recupId()
+        } else {
+            fetchCommande();
+        }
+    }
 
     return (
         <div className="account-container">
             <div className="order-section">
                 <h2>Vos commandes</h2>
                 <div className="Order-list">
-                    {commande.length > 0 ? (
+                    {commande !== null && commande.length > 0 ? (
                         commande.map((cmd) => (
                             <div key={cmd.id_commande} className="order-item">
                                 <p>Commande ID: {cmd.id_commande}</p>
@@ -168,10 +170,10 @@ function Account() {
                 {commandeDetail && (
                     <div className="order-details">
                         <h3>Détails de la commande</h3>
-                        <p>Commande ID: {commandeDetail.id_commande}</p>
-                        <ul>
-                            <li></li>
-                        </ul>
+                        <p>Commande ID: {commandeDetail[0].id_commande}</p>
+                        <div style={{display:"flex", gap:"5px"}}>
+                            {commandeDetail.map(ligne => <LigneCommande id={ligne.id_produit} quantite={ligne.QuantiteProduitLigne} prix={ligne.PrixUnitLigne} />)}
+                        </div>
 
                     </div>
                 )}

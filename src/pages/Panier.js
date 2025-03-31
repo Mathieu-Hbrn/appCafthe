@@ -52,9 +52,11 @@ function Panier() {
                             <small>Quantité : <input
                                 type={"number"}
                                 value={quantite[article.id_produit]}
-                                onChange={(e) => handleQuantityChange(article.id_produit, e.target.value)}
+                                onChange={(e) =>
+                                    handleQuantityChange(article.id_produit, e.target.value)}
                                 min="1"/></small>
-                            <button onClick={() => removeFromCart(article.id_produit)}> Retirer du panier </button>
+                            <button onClick={() =>
+                                removeFromCart(article.id_produit)}> Retirer du panier </button>
 
                         </li>
 

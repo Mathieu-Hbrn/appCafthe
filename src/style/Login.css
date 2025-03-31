@@ -1,0 +1,30 @@
+.div-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.div-container form ul li{
+    display: flex;
+    flex-direction: column;
+}
+
+.connexion {
+    margin: 30px;
+    padding: 30px;
+    border: 1px solid #E8E8E8FF;
+    border-radius: 20px;
+    background: #e8e8e8;
+}
+
+.connexion h2 {
+    margin-left: 50px;
+}
+
+.newAccount {
+    margin: 30px;
+    padding: 30px;
+    border: 1px solid #E8E8E8FF;
+    border-radius: 20px;
+    background: #E8E8E8FF;
+}

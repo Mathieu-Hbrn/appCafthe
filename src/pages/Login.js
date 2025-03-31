@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../style/Login.css'
 
 function Login(props) {
     const { login } = useContext(AuthContext);
@@ -77,7 +78,7 @@ function Login(props) {
 
     return (
         <div className="div-container">
-            <div>
+            <div className="connexion">
                 <h2>Connexion</h2>
                 <form onSubmit={handleSubmit}>
                     <ul>
@@ -108,7 +109,7 @@ function Login(props) {
                     </ul>
                 </form>
             </div>
-            <div>
+            <div className="newAccount">
                 <h2>Créer votre compte</h2>
                 <form onSubmit={registerSubmit}>
                     <ul>
