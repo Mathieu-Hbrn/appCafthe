@@ -10,6 +10,7 @@ function Header(props) {
     const handleLogout =() =>{
         logout()
     };
+
     const { cartItems } = useCart();
     return (
         <div className="Header">

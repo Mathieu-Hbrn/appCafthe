@@ -9,6 +9,12 @@ function ProductDetail(props) {
     const {id} = useParams();
     const [produit, setProduit] = useState([]);
     const { addToCart } = useCart();
+    const getTVA = (categorie) => {
+        return categorie === 3 ? 0.20 : 0.055
+    }
+    const prixHT = parseFloat(produit.prix_ht_produit);
+    const tva = getTVA(produit.categorie_produit);
+    const totalTTC = prixHT * (1+tva);
 
     const handleAddToCart = () => {
         addToCart(produit)
@@ -31,7 +37,7 @@ function ProductDetail(props) {
             <img src={`/img/${produit.Photo}`} alt="Produit" width={700}/>
             <h3>{produit.designation_produit}</h3>
             <p>{produit.description_produit}</p>
-            <p>{produit.prix_ht_produit}€ (HT)</p>
+            <p>{totalTTC.toFixed(2)}€</p>
             <button className="btn btn-primary" onClick={handleAddToCart}>Ajouter au panier</button>
         </div>
     );

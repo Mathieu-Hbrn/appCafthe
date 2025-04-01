@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import "../style/Account.css"
 import LigneCommande from "../components/LigneCommande";
+import {AuthContext} from "../context/AuthContext";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -26,6 +28,8 @@ function Account() {
         newPassword: '',
         confirmPassword: ''
     });
+    const {logout} = useContext(AuthContext);
+    const navigate = useNavigate()
 
 
     // Récupérer les données du client depuis le localStorage
@@ -155,6 +159,7 @@ function Account() {
     async function handleSuprrAccount() {
         const userDataSuppr = localStorage.getItem("user");
 
+
         if (!userDataSuppr) {
             console.error("Aucun utilisateur trouvé dans le localStorage");
             return;
@@ -173,7 +178,8 @@ function Account() {
                 }
             );
             console.log("Compte supprimé avec succès !");
-            setUser(null)
+            logout();
+            navigate("/")
 
         } catch (error) {
             console.error("Erreur lors de la suppression du compte:", error);
