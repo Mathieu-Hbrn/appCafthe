@@ -130,6 +130,8 @@ function Login(props) {
                                 type="text" // Changement de type à text
                                 required
                                 value={telephone}
+                                maxLength={10}
+                                minLength={10}
                                 onChange={(e) => setTelephone(e.target.value)}
                             />
                         </li>

@@ -268,6 +268,8 @@ function Account() {
                             value={formData.Telephone_client}
                             onChange={handleChange}
                             placeholder="Votre téléphone"
+                            maxLength={10}
+                            minLength={10}
                             required
                         />
                     </div>
