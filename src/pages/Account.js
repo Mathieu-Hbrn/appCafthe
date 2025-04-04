@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import "../style/Account.css"
+import "../style/fonts.css"
 import LigneCommande from "../components/LigneCommande";
 import {AuthContext} from "../context/AuthContext";
 import {useNavigate} from "react-router-dom";
@@ -56,7 +57,8 @@ function Account() {
             return
         } else {
             try {
-                const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/commande/client/${id_client}`, {
+                const res =
+                    await axios.get(`${process.env.REACT_APP_API_URL}/api/commande/client/${id_client}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setCommande(Array.isArray(res.data) ? res.data : []);

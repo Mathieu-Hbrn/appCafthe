@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap');
+
+
+.playfair {
+   font-family: "Playfair", serif;
+   font-optical-sizing: auto;
+   font-weight: bold;
+   font-style: normal;
+   font-variation-settings:
+           "wdth" 100;
+}
+
+.lato-regular {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h1, h2, link {
+    font-family: Playfair;
+    color: #01472B;
+    font-weight: bold;
+}
+
+h3, p, button, ul, li {
+    font-family: "Lato", sans-serif;
+}

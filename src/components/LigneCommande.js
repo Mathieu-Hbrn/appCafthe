@@ -1,4 +1,5 @@
 import React from 'react';
+import "../style/fonts.css";
 
 function LigneCommande({id, quantite, prix}) {
 

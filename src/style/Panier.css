@@ -1,0 +1,129 @@
+.Cart {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.Cart p {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}
+
+/* Liste des articles */
+#cart-dropdown {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+#cart-dropdown li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+#cart-dropdown li:hover {
+    transform: scale(1.02);
+}
+
+
+button {
+    background: burlywood;
+    color: black;
+    padding: 10px 15px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: brown;
+    color: white;
+}
+
+
+input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="number"]:focus {
+    border: 1px solid burlywood;
+    outline: none;
+}
+
+
+.subtotal, .total-ttc {
+    font-size: 20px;
+    font-weight: bold;
+    color: #01472B;
+}
+
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+#confirm-command {
+    width: 100%;
+    background: burlywood;
+    padding: 12px;
+    font-size: 16px;
+}
+
+#confirm-command:hover {
+    background: brown;
+    color: white;
+}
+
+
+#empty-cart-msg {
+    text-align: center;
+    font-size: 16px;
+    font-style: italic;
+}
+
+
+@media (max-width: 768px) {
+    .Cart {
+        width: 95%;
+    }
+
+    #cart-dropdown li {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

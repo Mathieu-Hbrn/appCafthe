@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
-import "../style/Header.css"
+import "../style/Header.css";
+import "../style/fonts.css";
 import {Link} from "react-router-dom";
 import {AuthContext} from "../context/AuthContext";
 import { useCart} from "../context/CartContext";
@@ -15,7 +16,7 @@ function Header(props) {
     return (
         <div className="Header">
             <Link to={``}><img src="/img/Logo.png" alt="Logo cafthé" id="logo"/></Link>
-            <h2>Bienvenue chez Caf'Thé</h2>
+            <h1>Bienvenue chez Caf'Thé</h1>
             {cartItems.length > 0 ? (
                 <div className="panier">
                     <p>Vous avez <span id="in-cart-items-num">{cartItems.length}</span> Articles dans votre panier</p>

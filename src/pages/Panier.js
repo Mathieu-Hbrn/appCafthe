@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from "../context/CartContext";
+import "../style/fonts.css";
+import "../style/Panier.css"
 
 function Panier() {
     const { cartItems, removeFromCart, clearCart } = useCart();
@@ -97,11 +99,10 @@ function Panier() {
             setLoading(false);
         }
     };
-    console.log(id_client)
-    console.log(adresseClient)
+
 
     return (
-        <div>
+        <div className="Cart">
             <p>Articles dans le panier : <span id="in-cart-items-num">{cartItems.length}</span></p>
 
             <ul id="cart-dropdown">

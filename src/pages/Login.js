@@ -2,7 +2,8 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../style/Login.css'
+import '../style/Login.css';
+import "../style/fonts.css";
 
 function Login(props) {
     const { login } = useContext(AuthContext);
@@ -32,7 +33,7 @@ function Login(props) {
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/client/login`, {
                 email: email,
-                mot_de_passe: mot_de_passe, // Correction du nom du champ
+                mot_de_passe: mot_de_passe,
             });
 
             const { token, client } = response.data;
@@ -66,6 +67,7 @@ function Login(props) {
             const { token, client } = response.data;
             login(token, client);
             navigate('/');
+
         } catch (error) {
             console.error('Erreur lors de l\'inscription : ', error);
             if (error.response && error.response.data && error.response.data.message) {
@@ -155,6 +157,7 @@ function Login(props) {
                                 type="password"
                                 value={mdp_register}
                                 onChange={(e) => setMdp_register(e.target.value)}
+                                required
                             />
                         </li>
                         <li>
